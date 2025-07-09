@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>FESTIVIVA Papelaria e Artigos de Festa</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      background: linear-gradient(to right, pink, #ff6b81, #6a9bd8, #66cc66, #f7e76b, #fff176);
+      min-height: 100vh;
+      overflow-x: hidden;
+      padding-bottom: 140px;
+    }
+    header {
+      text-align: center;
+      color: white;
+      text-shadow: 2px 2px 4px #000;
+      margin-top: 20px;
+    }
+    h1 { font-size: 3em; }
+    h2 { font-size: 1.5em; font-weight: normal; margin-top: 10px; }
+    .search-container {
+      position: relative;
+      width: 50%;
+      max-width: 400px;
+      margin: 20px auto 9px;
+    }
+    .search-container input {
+      width: 100%;
+      padding: 10px 40px 10px 15px;
+      font-size: 1em;
+      border-radius: 20px;
+      border: none;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+    .search-container .lupa {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 20px;
+      height: 20px;
+      opacity: 0.6;
+    }
+    nav {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+    nav ul.menu {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-evenly;
+      width: 80%;
+    }
+    nav ul.menu > li {
+      position: relative;
+      padding: 15px 20px;
+      font-weight: bold;
+      font-size: 90%;
+      color: white;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    nav ul.menu > li:nth-child(1) { background-color: #ff4081; }
+    nav ul.menu > li:nth-child(2) { background-color: #ff9800; }
+    nav ul.menu > li:nth-child(3) { background-color: #3f51b5; }
+    nav ul.menu > li:nth-child(4) { background-color: #009688; }
+    nav ul.menu > li:nth-child(5) { background-color: #9c27b0; }
+    nav ul.menu > li:nth-child(6) { background-color: #4caf50; }
+    nav ul.menu li .submenu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      padding: 20px;
+      z-index: 999;
+      flex-direction: row;
+      flex-wrap: wrap;
+      background: rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+    }
+    nav ul.menu li:hover .submenu {
+      display: flex;
+    }
+    .submenu ul {
+      list-style-type: disc;
+      padding-left: 20px;
+      margin-right: 30px;
+    }
+    .submenu li {
+      font-size: 0.95em;
+      color: white;
+      margin-bottom: 5px;
+      font-weight: normal;
+    }
+    .scroll-imagens,
+    .scroll-imagens-inversa {
+      height: auto;
+      width: 100%;
+      overflow: hidden;
+      padding: 0;
+      background: linear-gradient(to right, pink, #ff6b81, #6a9bd8, #66cc66, #f7e76b, #fff176);
+      margin-bottom: 2px;
+    }
+    .scroll-wrapper,
+    .scroll-wrapper-inverso {
+      display: flex;
+      width: max-content;
+    }
+    .scroll-wrapper {
+      animation: rolar 30s linear infinite;
+    }
+    .scroll-wrapper-inverso {
+      animation: rolar-inverso 30s linear infinite;
+    }
+    .scroll-wrapper img,
+    .scroll-wrapper-inverso img {
+      height: 220px;
+      margin: 0 10px;
+      object-fit: contain;
+      border-radius: 10px;
+    }
+    @keyframes rolar {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    @keyframes rolar-inverso {
+      0%   { transform: translateX(-50%); }
+      100% { transform: translateX(0); }
+    }
+    .baloes-img {
+      position: absolute;
+      top: 20px;
+      width: 96px;
+      pointer-events: none;
+      z-index: 15;
+    }
+    .esquerda { left: 10px; }
+    .direita { right: 10px; transform: scaleX(-1); }
+    .balao {
+      position: fixed;
+      bottom: -120px;
+      pointer-events: none;
+      z-index: 2;
+      animation: subirBalao linear infinite;
+    }
+    @keyframes subirBalao {
+      0% { transform: translateY(0); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateY(-120vh); opacity: 0; }
+    }
+    footer {
+      background: linear-gradient(to right, pink, #ff6b81, #6a9bd8, #66cc66, #f7e76b, #fff176);
+      text-align: center;
+      padding: 14px 10px;
+      box-shadow: 0 -2px 6px rgba(0,0,0,0.2);
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      font-size: 0.6em;
+      color: black;
+    }
+  </style>
+</head>
+<body>
+ <!-- Balões laterais -->
+  <img src="balões.png" alt="Balões coloridos" class="baloes-img esquerda" />
+  <img src="balões.png" alt="Balões coloridos" class="baloes-img direita" />
+
+  <!-- Balões animados -->
+  <script>
+    const espacamentoMinimo = 6;
+    const posicoes = [];
+    for(let i=0;i<15;i++){
+      let left, tries=0;
+      do {
+        left = Math.floor(Math.random()*85)+5;
+        tries++;
+      } while(posicoes.some(p=>Math.abs(p-left)<espacamentoMinimo) && tries<50);
+      posicoes.push(left);
+      const b=document.createElement('img');
+      b.src='balão.png';
+      b.alt='balão';
+      b.className='balao';
+      b.style.left=left+'%';
+      b.style.width=(72+Math.random()*16)+'px';
+      b.style.filter=`hue-rotate(${Math.random()*360}deg)`;
+      b.style.animationDuration=(8+Math.random()*6).toFixed(1)+'s';
+      b.style.animationDelay=(Math.random()*10).toFixed(1)+'s';
+      document.body.appendChild(b);
+    }
+  </script>
+  <header>
+    <h1>FESTIVIVA</h1>
+    <h2>Papelaria e Artigos de Festa</h2>
+  </header>
+
+  <div class="search-container">
+    <input type="text" id="busca" placeholder="posso ajudar a encontrar" />
+    <img class="lupa" src="lupa.png" alt="lupa" />
+  </div>
+
+  <nav>
+    <ul class="menu">
+      <li><a href="escolar.html" target="_blank" style="color: white; text-decoration: none;">ESCOLAR</a>
+        <div class="submenu">
+          <ul>
+            <li><a href="canetas.html" target="_blank" style="color: white; text-decoration: none;">Canetas</a>
+            </li><li><a href="marca texto.html" target="_blank" style="color: white; text-decoration: none;">Marca Texto</a></li>
+            <li><a href="hidrocor.html" target="_blank" style="color: white; text-decoration: none;">Hidrocor</a></li>
+            <li><a href="lapiseira.html" target="_blank" style="color: white; text-decoration: none;">Lapiseira</a>
+            </li><li><a href="apontador.html" target="_blank" style="color: white; text-decoration: none;">Apontador</a></li>
+            <li>Compasso</li>
+            <li><a href="glitter escolar.html" target="_blank" style="color: white; text-decoration: none;">Glitter Escolar</a></li>
+            <li><a href="tesoura.html" target="_blank" style="color: white; text-decoration: none;">Tesoura</a></li>
+            <li><a href="borracha.html" target="_blank" style="color: white; text-decoration: none;">Borracha</a></li>
+          </ul>
+          <ul>
+            <li>Mina para Lapiseira</li><li>Fita Adesiva</li><li>Lápis Madeira</li><li>Giz Cera</li>
+            <li>Lápis de Cor</li><li>Cola</li><li>Massa de Modelar</li><li>Tinta</li><li>Pincel</li>
+          </ul>
+          <ul>
+            <li>Caderno</li><li>Palito</li><li>Barbante</li><li>Régua</li><li>Emborrachados</li><li>E.V.A</li>
+          </ul>
+        </div>
+      </li>
+      <li><a href="escritório.html" target="_blank" style="color: white; text-decoration: none;">ESCRITÓRIO</a>
+        <div class="submenu">
+          <ul>
+            <li><a href="clips linha leve bacchi com 100 unidades.html" target="_blank" style="color: white; text-decoration: none;">Clips</a></li><li><a href="apagador para quadro branco com imã masterprint.html" target="_blank" style="color: white; text-decoration: none;">Apagador</a></li><li>Etiqueta</li><li><a href="grampeador de metal mp300.html" target="_blank" style="color: white; text-decoration: none;">Grampeador</a></li><li><a href="grampo galvanizado 26x6 1000 unidades.html" target="_blank" style="color: white; text-decoration: none;">Grampo 26x6</a></li><li>Envelopes</li>
+            <li><a href="estilete pequeno - lâmina 9mm.html" target="_blank" style="color: white; text-decoration: none;">Estilete Pequeno</a></li><li>Pastas</li><li><a href="fita adesiva dupla face embalando 18mmx10m.html" target="_blank" style="color: white; text-decoration: none;">Fita Adesiva Dupla Face Embalando 18mmx10m</a></li><li><a href="fita adesiva empacotamento alltape 12mmx40m.html" target="_blank" style="color: white; text-decoration: none;">Fita Adesiva Empacotamento Alltape 12mmx10m</a></li><li><a href="fita adesiva empacotamento alltape 45mmx40m.html" target="_blank" style="color: white; text-decoration: none;">Fita Adesiva Empacotamento Alltape 45mmx40m</a></li><li><a href="fita adesiva fit-pel 45mmx40m.html" target="_blank" style="color: white; text-decoration: none;">Fita Adesiva Fit-Pel 45mmx40m</a></li><li><a href="fita crepe koretech 10m.html" target="_blank" style="color: white; text-decoration: none;">Fita Crepe Koretech 10m</a></li><li><a href="grampo galvanizado 5000 unidades.html" target="_blank" style="color: white; text-decoration: none;">Grampo Galvanizado 5000 unidades</a></li><li><a href="Marcador Permanente Onda.html" target="_blank" style="color: white; text-decoration: none;">Marcador Permanente Onda</a></li><li><a href="marcador permanente pilot ponta 2.0.html" target="_blank" style="color: white; text-decoration: none;">Marcador Permanente Pilot Ponta 2.0</a></li>
+          </ul>
+          <ul>
+            <li>Bloco de Notas</li><li>Caderneta</li>
+          </ul>
+        </div>
+      </li>
+      <li><a href="papéis.html" target="_blank" style="color: white; text-decoration: none;">PAPÉIS</a>
+        <div class="submenu">
+          <ul>
+            <li>A4</li><li>Almaço</li><li>Cartolina</li><li>Embalagem Ouro</li><li>Embalagem Kraft</li>
+            <li>40Kg</li><li>Colorset</li><li>Crepom</li><li>Celofane</li>
+          </ul>
+          <ul>
+            <li>Guache</li><li>Contato Adesivo</li><li>Camurça</li>
+          </ul>
+        </div>
+      </li>
+      <li>ARTIGOS DE FESTA
+        <div class="submenu">
+          <ul>
+            <li>Bandeja</li><li>Vaso Romano</li><li>Lança Confete</li><li>Brinquedo Sereia</li>
+            <li>Embalagem Transparente</li><li>Tubete</li><li>Caixinhas Cristal</li>
+            <li>Porta Jóia Papel</li><li>Cachepó</li>
+          </ul>
+          <ul>
+            <li>Salgadeira</li><li>Taça</li><li>Prato Papelão</li><li>Cesto Colorido</li>
+            <li>Sacola Boca de Palhaço</li><li>Saia Cupcake</li><li>Caixa Coração</li><li>Sacolas Coloridas</li><li>Balões</li>
+          </ul>
+          <ul>
+            <li>Cortina</li><li>Laço</li><li>Papel Presente</li><li>Embalagem Presente</li>
+            <li>Tinta da Alegria</li><li>Fita Cetim</li><li>Suporte Balões</li><li>Argila</li>
+          </ul>
+        </div>
+      </li>
+      <li><a href="descartáveis.html" target="_blank" style="color: white; text-decoration: none;">DESCARTÁVEIS</a></li>
+    </ul>
+  </nav>
+
+  <!-- Primeira barra de rolagem (normal) -->
+  <div class="scroll-imagens">
+    <div class="scroll-wrapper">
+      <img src="caneta compactor 07.png" /><img src="caneta bic.png" /><img src="caneta spiro.png" />
+      <img src="lápis stitch.png" /><img src="canetas stitch.png" /><img src="compasso.png" />
+      <img src="livro cozy & fluffy.png" /><img src="coleção mentos.png" /><img src="cola colorida.png" />
+      <img src="coleção big onda.png" /><img src="tesoura lyke.png" /><img src="borracha tris cube.png" />
+      <!-- duplicadas -->
+      <img src="caneta compactor 07.png" /><img src="caneta bic.png" /><img src="caneta spiro.png" />
+      <img src="lápis stitch.png" /><img src="canetas stitch.png" /><img src="compasso.png" />
+      <img src="livro cozy & fluffy.png" /><img src="coleção mentos.png" /><img src="cola colorida.png" />
+      <img src="coleção big onda.png" /><img src="tesoura lyke.png" /><img src="borracha tris cube.png" />
+    </div>
+  </div>
+
+  <!-- Segunda barra de rolagem (inversa e contínua) -->
+  <div class="scroll-imagens-inversa">
+    <div class="scroll-wrapper-inverso">
+      <img src="lança confete.png" /><img src="embalagem para bolo.png" />
+      <img src="embalagem para brownie.png" /><img src="garfos descartáveis.png" />
+      <img src="colher descartável.png" /><img src="prato descartável prafesta.png" />
+      <img src="canudo strawplast.png" /><img src="feliz aniversário.png" />
+      <!-- duplicadas -->
+      <img src="lança confete.png" /><img src="embalagem para bolo.png" />
+      <img src="embalagem para brownie.png" /><img src="garfos descartáveis.png" />
+      <img src="colher descartável.png" /><img src="prato descartável prafesta.png" />
+      <img src="canudo strawplast.png" /><img src="feliz aniversário.png" />
+    </div>
+  </div>
+
+
+  <footer>
+    <p><strong>Endereço:</strong> Av. Inácio Monteiro, 157, 1º Andar, Loja 7, Cordeiro, Recife-PE</p>
+    <p><strong>Contato:</strong> (81) 9 9783 2624 • <strong>Instagram:</strong> @festi_viva • <strong>Email:</strong> festi.viva24@gmail.com</p>
+    <p><strong>CNPJ 55.697.154/0001-43<STRONG></p>
+    <p><strong>“Até aqui tem nos ajudado o Senhor”</strong></p>
+  </footer>
+
+<script>
+  const produtos = [
+    "Canetas", "Marca Texto", "Hidrocor", "Lapiseira", "Apontador", "Compasso", "Glitter Escolar", "Tesoura", "Borracha",
+    "Mina para Lapiseira", "Fita Adesiva", "Lápis Madeira", "Giz Cera", "Lápis de Cor", "Cola", "Massa de Modelar", "Tinta", "Pincel",
+    "Caderno", "Palito", "Barbante", "Régua", "Emborrachados", "E.V.A", "Clips", "Apagador", "Etiqueta", "Grampeador", "Grampo",
+    "Pastas", "Lápis Marcador", "Lápis Quadro Branco", "Bloco de Notas", "Caderneta", "A4", "Almaço", "Cartolina", "Embalagem Ouro",
+    "Embalagem Kraft", "40Kg", "Colorset", "Crepom", "Celofane", "Guache", "Contato Adesivo", "Camurça", "Bandeja", "Vaso Romano",
+    "Lança Confete", "Brinquedo Sereia", "Embalagem Transparente", "Tubete", "Caixinhas Cristal", "Porta Jóia Papel", "Cachepó",
+    "Salgadeira", "Taça", "Prato Papelão", "Cesto Colorido", "Sacola Boca de Palhaço", "Saia Cupcake", "Caixa Coração", "Sacolas Coloridas",
+    "Balões", "Cortina", "Laço", "Papel Presente", "Embalagem Presente", "Tinta da Alegria", "Fita Cetim", "Suporte Balões", "Argila",
+    "Caneta Compactor", "Caneta Bic", "Caneta Spiro", "Lápis Stitch", "Tesoura Lyke", "Borracha Tris Cube", "Lança Confete",
+    "Embalagem para Bolo", "Embalagem para Brownie", "Garfos Descartáveis", "Colher Descartável", "Prato Descartável Prafesta",
+    "Canudo Strawplast", "Feliz Aniversário"
+  ];
+
+  const campoBusca = document.getElementById("busca");
+  const lupa = document.querySelector(".lupa");
+
+function buscarProdutos() {
+  const termo = campoBusca.value.trim().toLowerCase();
+  if (termo.length < 2) {
+    alert("Digite pelo menos 2 letras para buscar.");
+    return;
+  }
+
+  const subitens = document.querySelectorAll('.submenu li, .submenu li a');
+  let encontrado = false;
+
+  subitens.forEach(item => {
+    const texto = item.textContent.trim().toLowerCase();
+    if (texto.includes(termo)) {
+      encontrado = true;
+
+      // Fecha todos os submenus
+      document.querySelectorAll('.submenu').forEach(sub => sub.style.display = 'none');
+
+      const li = item.closest('li');
+      const submenu = item.closest('.submenu');
+      submenu.style.display = 'flex';
+
+      // Move o item para o topo do UL
+      const ul = li.parentElement;
+      ul.prepend(li);
+
+      // Destaque visual
+      li.style.backgroundColor = 'yellow';
+      li.style.color = 'black';
+      setTimeout(() => {
+        li.style.backgroundColor = '';
+        li.style.color = 'white';
+      }, 3000);
+
+      // Scroll suave
+      li.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+      // Ao clicar no item, reexibe todos os itens com o item pesquisado no topo
+      li.addEventListener('click', () => {
+        const todos = Array.from(submenu.querySelectorAll('li'));
+        const novoUL1 = document.createElement('ul');
+        const novoUL2 = document.createElement('ul');
+        novoUL1.appendChild(li);
+        todos.forEach(el => {
+          if (el !== li) novoUL2.appendChild(el);
+        });
+        submenu.innerHTML = '';
+        submenu.appendChild(novoUL1);
+        submenu.appendChild(novoUL2);
+      }, { once: true });
+    }
+  });
+
+  if (!encontrado) {
+    alert("Nenhum produto encontrado.");
+  }
+}
+
+</script>
+</body>
+</html>

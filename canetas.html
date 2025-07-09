@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Canetas</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #fff8f8;
+      margin: 20px;
+    }
+
+    .galeria {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    .item {
+      width: 180px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 10px;
+      background: #fff;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .item img {
+      width: 100%;
+      height: 120px;
+      object-fit: contain;
+      border-radius: 5px;
+      margin-bottom: 10px;
+      transition: transform 0.3s ease; /* Adicionado para efeito suave */
+    }
+
+    .item img:hover {
+      transform: scale(2.0); /* Aumenta levemente a imagem ao passar o mouse */
+    }
+
+    .descricao {
+      min-height: 70px; /* Garante altura igual em todos */
+    }
+
+    .descricao p {
+      margin: 2px 0 !important;
+      line-height: 1.2 !important;
+      font-size: 0.9em;
+    }
+  </style>
+</head>
+<body>
+
+  <h2 style="text-align:center;">Canetas</h2>
+
+  <div class="galeria">
+    <div class="item">
+      <img src="caneta bic.png" alt="Caneta Bic" />
+      <div class="descricao">
+        <p><strong>Nome:</strong> Caneta Bic Cristal</p>
+        <p><strong>Cores:</strong> Azul, Preto, Vermelho</p>
+        <p><strong>Preço:</strong> R$ 1,50</p>
+      </div>
+    </div>
+
+    <div class="item">
+      <img src="caneta compactor 07.png" alt="Caneta Compactor 07" />
+      <div class="descricao">
+        <p><strong>Nome:</strong> Caneta Compactor 07</p>
+        <p><strong>Cores:</strong> Azul, Preto</p>
+        <p><strong>Preço:</strong> R$ 2,00</p>
+      </div>
+    </div>
+
+    <div class="item">
+      <img src="caneta spiro.png" alt="Caneta Spiro" />
+      <div class="descricao">
+        <p><strong>Nome:</strong> Caneta Spiro Gel</p>
+        <p><strong>Cores:</strong> Azul, Vermelha</p>
+        <p><strong>Preço:</strong> R$ 3,50</p>
+      </div>
+    </div>
+
+    <div class="item">
+      <img src="canetas stitch.png" alt="Canetas Stitch" />
+      <div class="descricao">
+        <p><strong>Nome:</strong> Canetas Stitch 6 Cores</p>
+        <p><strong>Cores:</strong> Azul, Azul Escura e Rosa</p>
+        <p><strong>Preço:</strong> R$ 12,00</p>
+      </div>
+    </div>
+
+    <div class="item">
+      <img src="caneta stitch escreve apaga.png" alt="Caneta Stitch Escreva Apaga" />
+      <div class="descricao">
+        <p><strong>Nome:</strong> Caneta Stitch Escreve e Apaga 0.5mm</p>
+        <p><strong>Cores:</strong> Azul, Branca e Verde</p>
+        <p><strong>Preço:</strong> R$ 7,50</p>
+      </div>
+    </div>
+     <div class="item">
+      <img src="caneta astronauta.png" alt="Caneta Astronauta" />
+      <div class="descricao">
+        <p><strong>Nome:</strong> Caneta Astronauta</p>
+        <p><strong>Cores:</strong> Azul e Branca</p>
+        <p><strong>Preço:</strong> R$ 8,50</p>
+      </div>
+    </div>
+    <div class="item">
+      <img src="caneta robor.png" alt="Caneta Robor" />
+      <div class="descricao">
+        <p><strong>Nome:</strong> Caneta Robor</p>
+        <p><strong>Cores:</strong> Azul e Branca</p>
+        <p><strong>Preço:</strong> R$ 6,50</p>
+      </div>
+    </div>
+    <div class="item">
+      <img src="canetas puff.png" alt="Canetas Puff" />
+      <div class="descricao">
+        <p><strong>Nome:</strong> Canetas Puff</p>
+        <p><strong>Cores:</strong> Azul, Rosa, Roxo, Amarela e Laranja</p>
+        <p><strong>Preço:</strong> R$ 5,50</p>
+      </div>
+    </div>
+
+
+
+  </div>
+
+</body>
+</html>
