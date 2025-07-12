@@ -303,12 +303,12 @@
       <img src="caneta compactor 07.png" /><img src="caneta bic.png" /><img src="caneta spiro.png" />
       <img src="lápis stitch.png" /><img src="canetas stitch.png" /><img src="compasso.png" />
       <img src="livro cozy & fluffy.png" /><img src="coleção mentos.png" /><img src="cola colorida.png" />
-      <img src="coleção big onda.png" /><img src="tesoura lyke.png" /><img src="borracha tris cube.png" />
+      <img src="coleção big onda.png" /><img src="tesoura lyke 12cm.png" /><img src="borracha tris cube.png" />
       <!-- duplicadas -->
       <img src="caneta compactor 07.png" /><img src="caneta bic.png" /><img src="caneta spiro.png" />
       <img src="lápis stitch.png" /><img src="canetas stitch.png" /><img src="compasso.png" />
       <img src="livro cozy & fluffy.png" /><img src="coleção mentos.png" /><img src="cola colorida.png" />
-      <img src="coleção big onda.png" /><img src="tesoura lyke.png" /><img src="borracha tris cube.png" />
+      <img src="coleção big onda.png" /><img src="tesoura lyke 12cm.png" /><img src="borracha tris cube.png" />
     </div>
   </div>
 
@@ -336,81 +336,122 @@
   </footer>
 
 <script>
-  const produtos = [
-    "Canetas", "Marca Texto", "Hidrocor", "Lapiseira", "Apontador", "Compasso", "Glitter Escolar", "Tesoura", "Borracha",
-    "Mina para Lapiseira", "Fita Adesiva", "Lápis Madeira", "Giz Cera", "Lápis de Cor", "Cola", "Massa de Modelar", "Tinta", "Pincel",
-    "Caderno", "Palito", "Barbante", "Régua", "Emborrachados", "E.V.A", "Clips", "Apagador", "Etiqueta", "Grampeador", "Grampo",
-    "Pastas", "Lápis Marcador", "Lápis Quadro Branco", "Bloco de Notas", "Caderneta", "A4", "Almaço", "Cartolina", "Embalagem Ouro",
-    "Embalagem Kraft", "40Kg", "Colorset", "Crepom", "Celofane", "Guache", "Contato Adesivo", "Camurça", "Bandeja", "Vaso Romano",
-    "Lança Confete", "Brinquedo Sereia", "Embalagem Transparente", "Tubete", "Caixinhas Cristal", "Porta Jóia Papel", "Cachepó",
-    "Salgadeira", "Taça", "Prato Papelão", "Cesto Colorido", "Sacola Boca de Palhaço", "Saia Cupcake", "Caixa Coração", "Sacolas Coloridas",
-    "Balões", "Cortina", "Laço", "Papel Presente", "Embalagem Presente", "Tinta da Alegria", "Fita Cetim", "Suporte Balões", "Argila",
-    "Caneta Compactor", "Caneta Bic", "Caneta Spiro", "Lápis Stitch", "Tesoura Lyke", "Borracha Tris Cube", "Lança Confete",
-    "Embalagem para Bolo", "Embalagem para Brownie", "Garfos Descartáveis", "Colher Descartável", "Prato Descartável Prafesta",
-    "Canudo Strawplast", "Feliz Aniversário"
-  ];
-
   const campoBusca = document.getElementById("busca");
   const lupa = document.querySelector(".lupa");
 
-function buscarProdutos() {
-  const termo = campoBusca.value.trim().toLowerCase();
-  if (termo.length < 2) {
-    alert("Digite pelo menos 2 letras para buscar.");
-    return;
+  function mostrarMensagem(msg) {
+    let aviso = document.getElementById("mensagem-busca");
+    if (!aviso) {
+      aviso = document.createElement("div");
+      aviso.id = "mensagem-busca";
+      aviso.style.position = "fixed";
+      aviso.style.top = "10px";
+      aviso.style.left = "50%";
+      aviso.style.transform = "translateX(-50%)";
+      aviso.style.background = "#000000cc";
+      aviso.style.color = "#fff";
+      aviso.style.padding = "8px 16px";
+      aviso.style.borderRadius = "8px";
+      aviso.style.zIndex = "10000";
+      aviso.style.fontSize = "0.9em";
+      aviso.style.transition = "opacity 0.3s ease";
+      document.body.appendChild(aviso);
+    }
+    aviso.textContent = msg;
+    aviso.style.opacity = 1;
+    setTimeout(() => aviso.style.opacity = 0, 3000);
   }
 
-  const subitens = document.querySelectorAll('.submenu li, .submenu li a');
-  let encontrado = false;
+  function buscarProdutos() {
+    const termo = campoBusca.value.trim().toLowerCase();
 
-  subitens.forEach(item => {
-    const texto = item.textContent.trim().toLowerCase();
-    if (texto.includes(termo)) {
-      encontrado = true;
+    if (termo.length < 2 && termo !== "") {
+      mostrarMensagem("Digite pelo menos 2 letras para buscar.");
+      return;
+    }
 
-      // Fecha todos os submenus
-      document.querySelectorAll('.submenu').forEach(sub => sub.style.display = 'none');
+    // Resetar submenus abertos por busca
+    document.querySelectorAll(".submenu[data-busca-aberto='true']").forEach(sub => {
+      sub.style.display = '';
+      sub.removeAttribute('data-busca-aberto');
+    });
 
-      const li = item.closest('li');
-      const submenu = item.closest('.submenu');
-      submenu.style.display = 'flex';
+    // Remover destaques anteriores
+    document.querySelectorAll(".submenu li").forEach(li => {
+      li.classList.remove("destaque-busca");
+      li.style.backgroundColor = '';
+      li.style.color = '';
+    });
 
-      // Move o item para o topo do UL
-      const ul = li.parentElement;
-      ul.prepend(li);
+    if (termo === "") {
+      // Fecha qualquer submenu aberto por busca se o campo está vazio
+      return; // Para não continuar com a busca
+    }
 
-      // Destaque visual
-      li.style.backgroundColor = 'yellow';
-      li.style.color = 'black';
-      setTimeout(() => {
+    const subitens = document.querySelectorAll(".submenu li, .submenu li a");
+    let encontrado = false;
+
+    subitens.forEach(item => {
+      const texto = item.textContent.trim().toLowerCase();
+      if (texto.includes(termo)) {
+        encontrado = true;
+
+        const li = item.tagName === "LI" ? item : item.closest("li");
+        const submenu = li.closest(".submenu");
+        const menuPrincipal = submenu.closest("li");
+
+        // Abre submenu e marca como aberto por busca
+        submenu.style.display = "flex";
+        submenu.setAttribute("data-busca-aberto", "true");
+
+        // Destaque visual com animação
+        li.style.backgroundColor = "yellow";
+        li.style.color = "black";
+        li.classList.add("destaque-busca");
+
+        // Scroll para o item
+        li.scrollIntoView({ behavior: "smooth", block: "center" });
+
+        // Fecha automaticamente se for aberto pela busca
+        menuPrincipal.addEventListener("mouseleave", () => {
+          if (submenu.getAttribute("data-busca-aberto") === "true") {
+            submenu.style.display = "";
+            submenu.removeAttribute("data-busca-aberto");
+            li.classList.remove("destaque-busca");
+            li.style.backgroundColor = '';
+            li.style.color = '';
+          }
+        }, { once: true });
+      }
+    });
+
+    if (!encontrado) {
+      mostrarMensagem("Nenhum produto encontrado.");
+    }
+  }
+
+  // Fecha o menu aberto por busca se o campo for apagado manualmente
+  campoBusca.addEventListener("input", function () {
+    if (campoBusca.value.trim() === "") {
+      document.querySelectorAll(".submenu[data-busca-aberto='true']").forEach(sub => {
+        sub.style.display = '';
+        sub.removeAttribute('data-busca-aberto');
+      });
+
+      // Remove destaque também
+      document.querySelectorAll(".submenu li").forEach(li => {
+        li.classList.remove("destaque-busca");
         li.style.backgroundColor = '';
-        li.style.color = 'white';
-      }, 3000);
-
-      // Scroll suave
-      li.scrollIntoView({ behavior: 'smooth', block: 'center' });
-
-      // Ao clicar no item, reexibe todos os itens com o item pesquisado no topo
-      li.addEventListener('click', () => {
-        const todos = Array.from(submenu.querySelectorAll('li'));
-        const novoUL1 = document.createElement('ul');
-        const novoUL2 = document.createElement('ul');
-        novoUL1.appendChild(li);
-        todos.forEach(el => {
-          if (el !== li) novoUL2.appendChild(el);
-        });
-        submenu.innerHTML = '';
-        submenu.appendChild(novoUL1);
-        submenu.appendChild(novoUL2);
-      }, { once: true });
+        li.style.color = '';
+      });
     }
   });
 
-  if (!encontrado) {
-    alert("Nenhum produto encontrado.");
-  }
-}
-
+  lupa.addEventListener("click", buscarProdutos);
+  campoBusca.addEventListener("keydown", function (e) {
+    if (e.key === "Enter") buscarProdutos();
+  });
 </script>
+
 </body>
 </html>
