@@ -213,18 +213,18 @@
     border-radius: 10px;
   }
 
-  .modalBox {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column; /* caso tenha mais de um conteúdo (como texto ou botão) */
-  height: 100%;
-  background: linear-gradient(135deg, gold, silver, #b76e79);
-  border-radius: 10px;
-  overflow: hidden;
-  padding-bottom: 40px;
+.modalBox {
   position: relative;
-  }
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, gold, silver, #b76e79); /* moldura */
+  border-radius: 10px;
+  padding: 20px; /* espaço para moldura interna */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
 
 .titulo {
   text-align: center;
@@ -241,16 +241,22 @@
 
 .videoOverlay {
   width: 100%;
-  height: auto;
+  height: 100%;
+  background: white; /* fundo interno opcional */
+  border-radius: 8px;
+  overflow: hidden;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
 }
 
 .videoOverlay video {
   width: 100%;
   height: auto;
+  max-height: 100%;
+  object-fit: contain;
   display: block;
+  border-radius: 6px;
 }
 
 .videoText {
@@ -590,6 +596,7 @@
 </div> 
 </body>
 </html>
+
 
 
 
