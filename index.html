@@ -559,6 +559,17 @@
   campoBusca.addEventListener("keydown", function (e) {
     if (e.key === "Enter") buscarProdutos();
   });
+  
+    document.addEventListener("DOMContentLoaded", function () {
+    const video = document.querySelector("#promoModal video");
+
+    video.addEventListener("timeupdate", function () {
+      if (video.currentTime >= 19.5) {
+        video.currentTime = 0;
+        video.play();
+      }
+    });
+  });
 </script>
 <div id="promoModal">
   <div class="modalBox">
@@ -572,19 +583,9 @@
     <div class="videoText">FELIZ<br>DIA DOS PAIS!</div>
   </div>
 </div> 
-    document.addEventListener("DOMContentLoaded", function () {
-    const video = document.querySelector("#promoModal video");
-
-    video.addEventListener("timeupdate", function () {
-      if (video.currentTime >= 19.5) {
-        video.currentTime = 0;
-        video.play();
-      }
-    });
-  });
-
 </body>
 </html>
+
 
 
 
