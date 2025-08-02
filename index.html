@@ -199,6 +199,93 @@
       font-size: 0.6em;
       color: black;
     }
+      #promoModal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 11cm;
+    height: 17cm;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 9999;
+    display: block;
+    border-radius: 10px;
+  }
+
+  .modalBox {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, gold, silver, #b76e79); /* ouro, prata e rosê */
+  border-radius: 10px;
+  overflow: hidden;
+  padding-bottom: 40px; /* 👈 adiciona espaço abaixo do vídeo */
+  }
+
+.titulo {
+  text-align: center;
+  margin: 5px 0;
+  font-size: 28px;
+  font-weight: bold;
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  background: linear-gradient(to right, yellow, red, blue, green);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.3); /* opcional para realce */  }
+
+.videoOverlay {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.videoOverlay video {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.videoText {
+  position: absolute;
+  top: 2%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 2.2em;
+  font-weight: bold;
+  color: red;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+  z-index: 5;
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  text-align: center; /* Centraliza o texto nas duas linhas */
+  line-height: 1.2em; /* Ajusta o espaçamento entre as linhas */
+  white-space: normal; /* Permite quebra de linha pelo <br> */
+  width: max-content; /* Para o texto não ocupar toda a largura */
+  max-width: 100%;   /* Evita overflow */
+}
+
+  video {
+   max-height: 100%;
+   max-width: 100%;
+   object-fit: contain;
+   display: block;
+   margin: 0 auto;  }
+
+  .closeBtn {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #555;
+    cursor: pointer;
+    z-index: 10;
+  }
+
+  .closeBtn:hover {
+    color: black;
+  }
   </style>
 </head>
 <body>
@@ -208,6 +295,9 @@
 
   <!-- Balões animados -->
   <script>
+    function fecharModal() {
+    document.getElementById('promoModal').style.display = 'none';
+  }
     const espacamentoMinimo = 6;
     const posicoes = [];
     for(let i=0;i<15;i++){
@@ -461,6 +551,19 @@
     if (e.key === "Enter") buscarProdutos();
   });
 </script>
+<div id="promoModal">
+  <div class="modalBox">
+    <span class="closeBtn" onclick="fecharModal()">&times;</span>
+    <h2 class="titulo">PROMOÇÃO</h2>
+    <div class="videoOverlay">
+      <video autoplay muted controls>
+       <source src="pais.mp4" type="video/mp4">
+       Seu navegador não suporta vídeo.
+      </video>
+    <div class="videoText">FELIZ<br>DIA DOS PAIS!</div>
+  </div>
+</div>      
 
 </body>
 </html>
+
