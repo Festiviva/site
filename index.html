@@ -321,9 +321,17 @@
 
   <!-- Balões animados -->
   <script>
-    function fecharModal() {
-    document.getElementById('promoModal').style.display = 'none';
+function fecharModal() {
+  const modal = document.getElementById('promoModal');
+  const video = modal.querySelector("video");
+
+  if (video) {
+    video.pause();
+    video.currentTime = 0;
   }
+
+  modal.style.display = 'none';
+}
     const espacamentoMinimo = 6;
     const posicoes = [];
     for(let i=0;i<15;i++){
@@ -602,6 +610,7 @@
 </div> 
 </body>
 </html>
+
 
 
 
