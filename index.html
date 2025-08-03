@@ -222,9 +222,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden; /* impede espaços vazios */
+  padding: 0;
   box-sizing: border-box;
-  padding: 0; /* remove espaçamento lateral */
 }
+
 
 .titulo {
   text-align: center;
@@ -242,21 +244,25 @@
 .videoOverlay {
   width: 100%;
   height: 100%;
-  background: white; /* fundo interno opcional */
-  border-radius: 8px;
-  overflow: hidden;
+  background: transparent; /* ou remova totalmente */
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 0;
+  margin: 0;
+  border-radius: 0;
+  overflow: hidden;
 }
 
 .videoOverlay video {
   width: 100%;
-  height: auto;
-  max-height: 100%;
-  object-fit: contain;
+  height: 100%;
+  object-fit: cover; /* cobre totalmente mesmo que corte um pouco */
   display: block;
-  border-radius: 6px;
+  border: none;
+  border-radius: 0;
+  margin: 0;
+  padding: 0;
 }
 
 .videoText {
@@ -596,6 +602,7 @@
 </div> 
 </body>
 </html>
+
 
 
 
