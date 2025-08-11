@@ -182,13 +182,28 @@
         <p><strong>Preço:</strong> R$ 5,50</p>
       </div>
     </div>
-
-
-
   </div>
 
+<script>
+  // Pega todos os itens da galeria
+  const galeria = document.querySelector('.galeria');
+  const itens = Array.from(galeria.querySelectorAll('.item'));
+
+  // Ordena os itens com base no texto do nome do produto
+  itens.sort((a, b) => {
+    const nomeA = a.querySelector('.descricao p').textContent.toUpperCase();
+    const nomeB = b.querySelector('.descricao p').textContent.toUpperCase();
+    return nomeA.localeCompare(nomeB);
+  });
+
+  // Remove os itens atuais e insere na nova ordem
+  galeria.innerHTML = '';
+  itens.forEach(item => galeria.appendChild(item));
+</script>  
+  
 </body>
 </html>
+
 
 
 
