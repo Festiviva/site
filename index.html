@@ -368,13 +368,14 @@ function fecharModal() {
       <li><a href="escolar.html" target="_blank" style="color: white; text-decoration: none;">ESCOLAR</a>
         <div class="submenu">
           <ul>
-            <li>Canetas</li>
-            </li><li><a href="marca texto.html" target="_blank" style="color: white; text-decoration: none;">Marca Texto</a></li>
-            <li><a href="hidrocor.html" target="_blank" style="color: white; text-decoration: none;">Hidrocor</a></li>
-            <li><a href="lapiseira.html" target="_blank" style="color: white; text-decoration: none;">Lapiseira</a>
-            </li><li><a href="apontador.html" target="_blank" style="color: white; text-decoration: none;">Apontador</a></li>
+            <!-- <li><a href="canetas.html" target="_blank" style="color: white; text-decoration: none;">Canetas</a></li> -->
+            <li>Canetas/>
+            <>Marca Texto</li>
+            <li>Hidrocor</li>
+            <li>Lapiseira</li>
+            <li>Apontador</li>
             <li>Compasso</li>
-            <li><a href="glitter escolar.html" target="_blank" style="color: white; text-decoration: none;">Glitter Escolar</a></li>
+            <li>Glitter Escolar</li>
             <li><a href="tesoura.html" target="_blank" style="color: white; text-decoration: none;">Tesoura</a></li>
             <li><a href="borracha.html" target="_blank" style="color: white; text-decoration: none;">Borracha</a></li>
           </ul>
@@ -595,6 +596,35 @@ function fecharModal() {
       <!-- } -->
     <!-- }); -->
   <!-- }); -->
+
+  // ... seu código atual de busca e eventos ...
+
+  // Código novo aqui:
+  function ordenarSubmenusAlfabeticamente() {
+    const submenus = document.querySelectorAll(".submenu");
+
+    submenus.forEach(submenu => {
+      const listas = submenu.querySelectorAll("ul");
+      listas.forEach(ul => {
+        const itens = Array.from(ul.querySelectorAll("li"));
+
+        itens.sort((a, b) => {
+          const textoA = a.textContent.trim().toLowerCase();
+          const textoB = b.textContent.trim().toLowerCase();
+          return textoA.localeCompare(textoB, 'pt-BR');
+        });
+
+        // Remove os itens antigos
+        itens.forEach(li => ul.removeChild(li));
+
+        // Adiciona de volta na ordem correta
+        itens.forEach(li => ul.appendChild(li));
+      });
+    });
+  }
+
+  // Executa ao carregar a página
+  ordenarSubmenusAlfabeticamente();
 </script>
 <!-- <div id="promoModal"> -->
   <!-- <div class="modalBox"> -->
@@ -610,6 +640,7 @@ function fecharModal() {
 <!-- </div> --> 
 </body>
 </html>
+
 
 
 
