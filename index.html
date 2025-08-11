@@ -101,29 +101,6 @@
       display: flex;
     }
 
-.submenu {
-  display: flex;
-  flex-wrap: wrap;
-  background: rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  padding: 20px;
-  gap: 20px;
-}
-
-.submenu .coluna {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  flex: 1;
-  min-width: 150px;
-}
-
-.submenu .coluna li {
-  list-style: disc;
-  color: white;
-  font-size: 0.95em;
-}
-    
     .submenu ul {
       list-style-type: disc;
       padding-left: 20px;
@@ -693,40 +670,6 @@ function fecharModal() {
   // Executa ao carregar a página
   ordenarSubmenusAlfabeticamente();
 
-function distribuirSubmenusEmColunas() {
-  const submenus = document.querySelectorAll(".submenu");
-
-  submenus.forEach(submenu => {
-    // Captura todos os <li> diretos
-    const itens = Array.from(submenu.querySelectorAll("li"));
-    if (itens.length === 0) return;
-
-    // Remove os <li> antigos para reorganizar
-    itens.forEach(li => submenu.removeChild(li));
-
-    // Calcula o número de colunas necessárias
-    const maxPorColuna = 10;
-    const totalColunas = Math.ceil(itens.length / maxPorColuna);
-
-    // Divide os itens igualmente entre as colunas
-    for (let i = 0; i < totalColunas; i++) {
-      const coluna = document.createElement("div");
-      coluna.classList.add("coluna");
-
-      const inicio = i * maxPorColuna;
-      const fim = inicio + maxPorColuna;
-      const grupo = itens.slice(inicio, fim);
-
-      grupo.forEach(item => coluna.appendChild(item));
-      submenu.appendChild(coluna);
-    }
-  });
-}
-
-// Executa ao carregar a página
-document.addEventListener("DOMContentLoaded", () => {
-  distribuirSubmenusEmColunas();
-});  
 </script>
 <!-- <div id="promoModal"> -->
   <!-- <div class="modalBox"> -->
