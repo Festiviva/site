@@ -100,6 +100,30 @@
     nav ul.menu li:hover .submenu {
       display: flex;
     }
+
+.submenu {
+  display: flex;
+  flex-wrap: wrap;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 20px;
+  gap: 20px;
+}
+
+.submenu .coluna {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  flex: 1;
+  min-width: 150px;
+}
+
+.submenu .coluna li {
+  list-style: disc;
+  color: white;
+  font-size: 0.95em;
+}
+    
     .submenu ul {
       list-style-type: disc;
       padding-left: 20px;
@@ -367,7 +391,7 @@ function fecharModal() {
     <ul class="menu">
       <li><a href="escolar.html" target="_blank" style="color: white; text-decoration: none;">ESCOLAR</a>
         <div class="submenu">
-          <ul>
+          <!--  <ul>  -->
             <!-- <li><a href="canetas.html" target="_blank" style="color: white; text-decoration: none;">Canetas</a></li> -->
             <li>Canetas</li>
             <li>Marca Texto</li>
@@ -393,12 +417,12 @@ function fecharModal() {
             <li>Régua</li>
             <li>Emborrachados</li>
             <li>E.V.A</li>
-          </ul>
+          <!--  </ul>  -->
         </div>
       </li>
       <li><a href="escritório.html" target="_blank" style="color: white; text-decoration: none;">ESCRITÓRIO</a>
         <div class="submenu">
-          <ul>
+          <!-- <ul> -->
             <li>Clips</li>
             <li>Apagador</li>
             <li>Etiqueta</li>
@@ -417,12 +441,12 @@ function fecharModal() {
             <li>Marcador Permanente Pilot Ponta 2.0</li>
             <li>Bloco de Notas</li>
             <li>Caderneta</li>
-          </ul>
+          <!-- </ul> -->
         </div>
       </li>
       <li><a href="papéis.html" target="_blank" style="color: white; text-decoration: none;">PAPÉIS</a>
         <div class="submenu">
-          <ul>
+          <!-- <ul>  -->
             <li>A4</li>
             <li>Almaço</li>
             <li>Cartolina</li>
@@ -435,12 +459,12 @@ function fecharModal() {
             <li>Guache</li>
             <li>Contato Adesivo</li>
             <li>Camurça</li>
-          </ul>
+          <!-- </ul> -->
         </div>
       </li>
       <li><a href="artigos de festa.html" target="_blank" style="color: white; text-decoration: none;">ARTIGOS DE FESTA</a>
         <div class="submenu">
-          <ul>
+          <!-- <ul> -->
             <li>Bandeja</li>
             <li>Vaso Romano</li>
             <li>Lança Confete</li>
@@ -467,7 +491,7 @@ function fecharModal() {
             <li>Fita Cetim</li>
             <li>Suporte Balões</li>
             <li>Argila</li>
-          </ul>
+          <!-- </ul> -->
         </div>
       </li>
       <li><a href="descartáveis.html" target="_blank" style="color: white; text-decoration: none;">DESCARTÁVEIS</a></li>
@@ -668,6 +692,41 @@ function fecharModal() {
 
   // Executa ao carregar a página
   ordenarSubmenusAlfabeticamente();
+
+function distribuirSubmenusEmColunas() {
+  const submenus = document.querySelectorAll(".submenu");
+
+  submenus.forEach(submenu => {
+    // Captura todos os <li> diretos
+    const itens = Array.from(submenu.querySelectorAll("li"));
+    if (itens.length === 0) return;
+
+    // Remove os <li> antigos para reorganizar
+    itens.forEach(li => submenu.removeChild(li));
+
+    // Calcula o número de colunas necessárias
+    const maxPorColuna = 10;
+    const totalColunas = Math.ceil(itens.length / maxPorColuna);
+
+    // Divide os itens igualmente entre as colunas
+    for (let i = 0; i < totalColunas; i++) {
+      const coluna = document.createElement("div");
+      coluna.classList.add("coluna");
+
+      const inicio = i * maxPorColuna;
+      const fim = inicio + maxPorColuna;
+      const grupo = itens.slice(inicio, fim);
+
+      grupo.forEach(item => coluna.appendChild(item));
+      submenu.appendChild(coluna);
+    }
+  });
+}
+
+// Executa ao carregar a página
+document.addEventListener("DOMContentLoaded", () => {
+  distribuirSubmenusEmColunas();
+});  
 </script>
 <!-- <div id="promoModal"> -->
   <!-- <div class="modalBox"> -->
@@ -683,6 +742,7 @@ function fecharModal() {
 <!-- </div> --> 
 </body>
 </html>
+
 
 
 
